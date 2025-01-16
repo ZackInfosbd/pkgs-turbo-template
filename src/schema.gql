@@ -1,0 +1,214 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  image: String
+  name: String
+  createdAt: DateTime!
+  sub: String!
+  updatedAt: DateTime!
+  email: String!
+  items: [Item!]!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type AuthOutput {
+  token: String!
+  user: User!
+}
+
+type Item {
+  image: String
+  createdAt: DateTime!
+  id: Int!
+  name: String!
+  uid: String!
+  updatedAt: DateTime!
+  user: User!
+}
+
+type Query {
+  users(distinct: [UserScalarFieldEnum!], cursor: UserWhereUniqueInput, orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): [User!]!
+  user(where: UserWhereUniqueInput!): User!
+  items(distinct: [ItemScalarFieldEnum!], cursor: ItemWhereUniqueInput, orderBy: [ItemOrderByWithRelationInput!], skip: Int, take: Int, where: ItemWhereInput): [Item!]!
+  item(where: ItemWhereUniqueInput!): Item!
+  myItems(distinct: [ItemScalarFieldEnum!], cursor: ItemWhereUniqueInput, orderBy: [ItemOrderByWithRelationInput!], skip: Int, take: Int, where: ItemWhereInput): [Item!]!
+}
+
+enum UserScalarFieldEnum {
+  sub
+  name
+  image
+  createdAt
+  updatedAt
+}
+
+input UserWhereUniqueInput {
+  sub: String!
+}
+
+input UserOrderByWithRelationInput {
+  createdAt: SortOrder
+  name: SortOrder
+  sub: SortOrder
+  updatedAt: SortOrder
+  Item: ItemOrderByRelationAggregateInput
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+input ItemOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  createdAt: DateTimeFilter
+  Item: ItemListRelationFilter
+  name: StringFilter
+  NOT: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  sub: StringFilter
+  updatedAt: DateTimeFilter
+}
+
+input DateTimeFilter {
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  notIn: [String!]
+}
+
+input ItemListRelationFilter {
+  every: ItemWhereInput
+  none: ItemWhereInput
+  some: ItemWhereInput
+}
+
+input ItemWhereInput {
+  AND: [ItemWhereInput!]
+  createdAt: DateTimeFilter
+  id: IntFilter
+  image: String
+  name: StringFilter
+  NOT: [ItemWhereInput!]
+  OR: [ItemWhereInput!]
+  uid: StringFilter
+  updatedAt: DateTimeFilter
+  user: UserRelationFilter
+}
+
+input IntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  lt: Int
+  lte: Int
+}
+
+input StringFilter {
+  mode: QueryMode
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+input UserRelationFilter {
+  is: UserWhereInput
+  isNot: UserWhereInput
+}
+
+enum ItemScalarFieldEnum {
+  id
+  createdAt
+  updatedAt
+  name
+  image
+  uid
+}
+
+input ItemWhereUniqueInput {
+  id: Int!
+}
+
+input ItemOrderByWithRelationInput {
+  createdAt: SortOrder
+  id: SortOrder
+  name: SortOrder
+  uid: SortOrder
+  updatedAt: SortOrder
+  user: UserOrderByWithRelationInput
+}
+
+type Mutation {
+  login(loginInput: LoginInput!): AuthOutput!
+  registerWithCredentials(RegisterWithCredentialsInput: RegisterWithCredentialsInput!): AuthOutput!
+  registerWithProviders(RegisterWithProviderInput: RegisterWithProviderInput!): AuthOutput!
+  removeUser(where: UserWhereUniqueInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  createItem(createItemInput: CreateItemInput!): Item!
+  removeItem(where: ItemWhereUniqueInput!): Item!
+  updateItem(updateItemInput: UpdateItemInput!): Item!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input RegisterWithCredentialsInput {
+  image: String
+  name: String
+  email: String!
+  password: String!
+}
+
+input RegisterWithProviderInput {
+  image: String
+  name: String
+  sub: String!
+  type: AuthProviderType!
+}
+
+enum AuthProviderType {
+  CREDENTIALS
+  GOOGLE
+  APPLE
+}
+
+input UpdateUserInput {
+  sub: String!
+}
+
+input CreateItemInput {
+  name: String!
+}
+
+input UpdateItemInput {
+  name: String
+  id: Int!
+}
